@@ -131,6 +131,26 @@ public class Dataset extends _Dataset {
         return Collections.unmodifiableCollection(projections);
     }
     
+    public Collection<Format> getFormatsExternal() throws IOException {
+        Set<Format> formats = new HashSet<>();
+        
+        if (isExternal()) {
+            formats.addAll(getExternal().getFormats());
+        }
+        
+        return Collections.unmodifiableCollection(formats);
+    }
+
+    public Collection<Projection> getProjectionsExternal() throws IOException {
+        Set<Projection> projections = new HashSet<>();
+        
+        if (isExternal()) {
+            projections.addAll(getExternal().getProjections());
+        }
+        
+        return Collections.unmodifiableCollection(projections);
+    }
+    
     public Collection<Integer> getSrids() throws IOException {
         Set<Integer> srids = new TreeSet<>();
         

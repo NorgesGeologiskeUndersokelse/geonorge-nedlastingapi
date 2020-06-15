@@ -165,7 +165,7 @@ public class DownloadService {
         if (dataset == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        Collection<Format> formats = dataset.getFormats();
+        Collection<Format> formats = dataset.getFormatsExternal();
         String json = gson().toJson(formats);
         return Response.ok(json, MediaType.APPLICATION_JSON).build();
     }
@@ -214,7 +214,7 @@ public class DownloadService {
         if (dataset == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
-        Collection<Projection> projections = dataset.getProjections();
+        Collection<Projection> projections = dataset.getProjectionsExternal();
         String json = gson().toJson(projections);
         return Response.ok(json, MediaType.APPLICATION_JSON).build();
     }
