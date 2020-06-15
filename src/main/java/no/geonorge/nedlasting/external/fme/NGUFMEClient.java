@@ -1,6 +1,7 @@
 package no.geonorge.nedlasting.external.fme;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -86,5 +87,11 @@ public class NGUFMEClient extends FMEClient {
         
         return Collections.unmodifiableMap(m);
     }
+
+	@Override
+	public List<Area> getArea() throws IOException {
+		// TODO Auto-generated method stub
+		return new ArrayList<Area>();
+	}
 
 }

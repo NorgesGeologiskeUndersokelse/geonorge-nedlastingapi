@@ -165,7 +165,7 @@ public class Dataset extends _Dataset {
         return false;
     }
 
-    public List<Area> getAreas() {
+    public List<Area> getAreas() throws IOException {
         Map<String, Area> areaTypeByAreaKey = new HashMap<>();
         for (DatasetFile file : getFiles()) {
             String areaKey = file.getAreaKey();
@@ -179,6 +179,16 @@ public class Dataset extends _Dataset {
             }
             areaType.addFormat(file.getFormat());
             areaType.addProjection(file.getProjection().forClient());
+        }
+        if (isExternal()){
+        	List<Area> externalAreas = getExternal().getArea();
+        	for (Area area: externalAreas){
+        		String areaKey = area.getType() + "-" + area.getCode();
+                Area areaType = areaTypeByAreaKey.get(areaKey);
+                if (areaType == null) {
+                    areaTypeByAreaKey.put(areaKey, area);
+                }
+        	}
         }
 
         List<Area> areas = new ArrayList<>(areaTypeByAreaKey.values());

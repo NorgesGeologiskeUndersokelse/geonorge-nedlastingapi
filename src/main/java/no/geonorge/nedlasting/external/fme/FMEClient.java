@@ -152,7 +152,7 @@ public abstract class FMEClient extends External {
     /**
      * submitJob submits an order to FME DataDownload service
      */
-    public String submitJob(Format format, Projection projection, String email, List<Area> areas, String mapSelectionLayer) throws IOException {
+    public String submitJob(Format format, Projection projection, String email, Area area, String mapSelectionLayer) throws IOException {
         String url = urlPrefix + "/fmedatadownload/" + repository + "/" + workspace + "?accept=json&token="
                 + getToken();
         Map<String, String> postParameters = new HashMap<>();
@@ -175,9 +175,9 @@ public abstract class FMEClient extends External {
 
         // Convert areas of type kommune/fylke/other to a list of area-codes
         List<String> areaList = new ArrayList<String>();
-        for (Area area:areas) {
-            areaList.add(area.getCode());
-        }
+        
+        areaList.add(area.getCode());
+        
         if (areaList.size() > 0) {
             postParameters.put(getAreaParameterName(mapSelectionLayer),StringUtils.join(areaList,','));
         }

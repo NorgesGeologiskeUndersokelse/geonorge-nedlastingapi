@@ -351,16 +351,25 @@ public class DownloadService {
             if (!areaRest.isEmpty() && !formatRest.isEmpty() && !projectionRest.isEmpty() && dataset.isExternal()) {
                 for (Format format : orderLine.getFormats()) {
                     for (Projection projection : orderLine.getProjections()) {
-                        for (OrderArea area : orderLine.getAreas()) {
-                            if (area.isTypePolygonSelection() && orderLine.hasCoordinates()) {
-                                areaRest.remove(area);
-                                area = null;
+                        for (OrderArea orderArea : orderLine.getAreas()) {
+                        	
+                        	External external = dataset.getExternal();
+                            String jobId = null;
+                            
+                        	if (orderArea.isTypePolygonSelection() && orderLine.hasCoordinates()) {
+                                areaRest.remove(orderArea);
+                                orderArea = null;
+                                jobId = external.submitJob(format, projection, order.getEmail(),
+                                        orderLine.getCoordinates());
+                            } else {
+                            	Area area = new Area();
+                            	area.setCode(orderArea.getCode());
+                            	area.setName(orderArea.getName());
+                            	area.setType(orderArea.getType());
+                            	
+                            	jobId = external.submitJob(format, projection, order.getEmail(),
+                                        area,"");
                             }
-                            External external = dataset.getExternal();
-			    // TODO: Support cells (municipalities,counties,map sheets etc) enabling use of 
-	                    // administrative area codes in the external-API
-                            String jobId = external.submitJob(format, projection, order.getEmail(),
-                                    orderLine.getCoordinates());
                             
                             DownloadItem downloadItem = ctxt.newObject(DownloadItem.class);
                             downloadItem.setSrid(projection.getSrid());
@@ -370,7 +379,7 @@ public class DownloadService {
                             downloadItem.setCoordinates(orderLine.getCoordinates());
                             downloadOrder.addToItems(downloadItem);
                             
-                            areaRest.remove(area);
+                            areaRest.remove(orderArea);
                             formatRest.remove(format);
                             projectionRest.remove(projection);
                         }
