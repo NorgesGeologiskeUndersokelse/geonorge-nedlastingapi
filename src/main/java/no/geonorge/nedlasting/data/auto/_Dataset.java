@@ -17,6 +17,8 @@ public abstract class _Dataset extends CayenneDataObject {
 
     public static final String ACCESS_CONSTRAINT_PROPERTY = "accessConstraint";
     public static final String FME_CUT_URL_PROPERTY = "fmeCutUrl";
+    public static final String INSPIRE_ID_CODE_PROPERTY = "inspireIdCode";
+    public static final String INSPIRE_ID_NAMESPACE_PROPERTY = "inspireIdNamespace";
     public static final String MAP_SELECTION_LAYER_PROPERTY = "mapSelectionLayer";
     public static final String MAX_AREA_PROPERTY = "maxArea";
     public static final String METADATA_UUID_PROPERTY = "metadataUuid";
@@ -42,6 +44,20 @@ public abstract class _Dataset extends CayenneDataObject {
     }
     public String getFmeCutUrl() {
         return (String)readProperty(FME_CUT_URL_PROPERTY);
+    }
+
+    public void setInspireIdCode(String inspireIdCode) {
+        writeProperty(INSPIRE_ID_CODE_PROPERTY, inspireIdCode);
+    }
+    public String getInspireIdCode() {
+        return (String)readProperty(INSPIRE_ID_CODE_PROPERTY);
+    }
+
+    public void setInspireIdNamespace(String inspireIdNamespace) {
+        writeProperty(INSPIRE_ID_NAMESPACE_PROPERTY, inspireIdNamespace);
+    }
+    public String getInspireIdNamespace() {
+        return (String)readProperty(INSPIRE_ID_NAMESPACE_PROPERTY);
     }
 
     public void setMapSelectionLayer(String mapSelectionLayer) {

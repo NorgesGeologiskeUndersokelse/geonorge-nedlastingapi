@@ -13,6 +13,8 @@ public class Dataset {
     private String title;
     private List<File> files;
     private Integer maxArea;
+    private String inspireIdCode;
+    private String inspireIdNamespace;
 
     private Map<String, String> external;
 
@@ -101,6 +103,22 @@ public class Dataset {
 
     public void setMaxArea(Integer maxArea) {
         this.maxArea = maxArea;
+    }
+
+    public String getInspireIdCode() {
+        return inspireIdCode;
+    }
+
+    public void setInspireIdCode(String inspireIdCode) {
+        this.inspireIdCode = inspireIdCode;
+    }
+
+    public String getInspireIdNamespace() {
+        return inspireIdNamespace;
+    }
+
+    public void setInspireIdNamespace(String inspireIdNamespace) {
+        this.inspireIdNamespace = inspireIdNamespace;
     }
 
 }

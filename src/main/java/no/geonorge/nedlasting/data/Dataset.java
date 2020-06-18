@@ -85,6 +85,8 @@ public class Dataset extends _Dataset {
         d.setMetadataUuid(getMetadataUuid());
         d.setTitle(getTitle());
         d.setMaxArea(getMaxArea());
+        d.setInspireIdCode(getInspireIdCode());
+        d.setInspireIdNamespace(getInspireIdNamespace());
         for (DatasetFile file : getFiles()) {
             d.addFile(file.forClient(urlPrefix));
         }
@@ -102,6 +104,8 @@ public class Dataset extends _Dataset {
         d.setMetadataUuid(getMetadataUuid());
         d.setTitle(getTitle());
         d.setMaxArea(getMaxArea());
+        d.setInspireIdCode(getInspireIdCode());
+        d.setInspireIdNamespace(getInspireIdNamespace());
         return d;
     }
 

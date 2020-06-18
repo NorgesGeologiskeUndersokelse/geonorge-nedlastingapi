@@ -38,6 +38,7 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.cayenne.ObjectContext;
 import org.apache.cayenne.query.SelectQuery;
 import org.apache.commons.io.FilenameUtils;
+import org.jdom2.Element;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -557,6 +558,8 @@ public class DownloadService {
 
         dataset.setTitle(requestDataset.getTitle());
         dataset.setMaxArea(requestDataset.getMaxArea());
+        dataset.setInspireIdCode(requestDataset.getInspireIdCode());
+        dataset.setInspireIdNamespace(requestDataset.getInspireIdNamespace());
 
         if (!requestDataset.ignoreFiles()) {
             Set<String> restFileIds = new HashSet<>(dataset.getFileIds());
@@ -695,6 +698,24 @@ public class DownloadService {
             
             entry.setLinks(links);
             
+            List<Element> foreignMarkup = new ArrayList<>(2);
+
+            if (dataset.getInspireIdCode() != null) {
+                Element spiCode = new Element("spatial_dataset_identifier_code", "inspire_dls",
+                        "http://inspire.service/metadata");
+                spiCode.addContent(dataset.getInspireIdCode());
+                foreignMarkup.add(spiCode);
+            }
+
+            if (dataset.getInspireIdNamespace() != null) {
+                Element spiNamespace = new Element("spatial_dataset_identifier_namespace", "inspire_dls",
+                        "http://inspire.service/metadata");
+                spiNamespace.addContent(dataset.getInspireIdNamespace());
+                foreignMarkup.add(spiNamespace);
+            }
+
+            entry.setForeignMarkup(foreignMarkup);
+                        
             entries.add(entry);
         }
         feed.setEntries(entries);
@@ -744,6 +765,24 @@ public class DownloadService {
         links.add(describedbyLink);
 
         feed.setLinks(links);
+        
+        List<Element> foreignMarkup = new ArrayList<>(2);
+        
+        if (dataset.getInspireIdCode() != null) {
+            Element spiCode = new Element("spatial_dataset_identifier_code", "inspire_dls",
+                    "http://inspire.service/metadata");
+            spiCode.addContent(dataset.getInspireIdCode());
+            foreignMarkup.add(spiCode);
+        }
+
+        if (dataset.getInspireIdNamespace() != null) {
+            Element spiNamespace = new Element("spatial_dataset_identifier_namespace", "inspire_dls",
+                    "http://inspire.service/metadata");
+            spiNamespace.addContent(dataset.getInspireIdNamespace());
+            foreignMarkup.add(spiNamespace);
+        }
+        
+        feed.setForeignMarkup(foreignMarkup);
 
         Date lastFileDate = dataset.getLastFileDate();
         if (lastFileDate != null) {
